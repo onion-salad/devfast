@@ -22,4 +22,19 @@ export default defineConfig({
       },
     ],
   },
+  build: {
+    // チャンクサイズの警告を表示する閾値を1000kBに引き上げ
+    chunkSizeWarningLimit: 1000,
+    // manualChunksを使ってコードスプリッティングを設定
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            // すべての依存関係を"vendor"チャンクに分割
+            return "vendor";
+          }
+        },
+      },
+    },
+  },
 });
